@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "utf-8"> 
+    <title>Time Test</title>
+    <style> 
+      body { background-color: rgb(10,148,86); }
+    .title {
+    color:Orange; 
+    }
+    .Intro { 
+    background:Yellow;
+    }
+    </style> 
+    <script>
+      // Define variables for the quiz
+      var num1, num2, operator, answer, userAnswer;
+      var questionCount = 0;
+      var correctCount = 0;
+      var timer;
+
+      // Function to generate a random number between min and max
+      function generateRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      // Function to generate a random math question
+      function generateQuestion() {
+        // Generate random numbers and operator
+        num1 = generateRandomNumber(25, 50);
+        num2 = generateRandomNumber(1, 20);   
+        operator = generateRandomNumber(1, 4);
+
+        // Choose operator based on the random number
+        switch (operator) {
+          case 1:
+            answer = num1 + num2;
+            operator = "+";
+            break;
+          case 2:
+            answer = num1 - num2;
+            operator = "-";
+            break;
+          case 3:
+            answer = num1 * num2;
+            operator = "x";
+            break;
+          case 4:
+            answer = Math.floor(num1 / num2);
+            operator = "/";
+            break;
+        }
+
+        // Display the question
+        document.getElementById("question").innerHTML =
+          "What is " + num1 + " " + operator + " " + num2 + "? (No remainder for division)";
+
+        // Increment the question count
+        questionCount++;
+      }
+
+      // Function to start the quiz
+      function startQuiz() {
+        // Generate the first question
+        generateQuestion();
+
+        // Display the timer
+        var timeLeft = 60;
+        document.getElementById("timer").innerHTML = "Time left: " + timeLeft;
+        timer = setInterval(function () {
+          timeLeft--;
+          document.getElementById("timer").innerHTML =
+            "Time left: " + timeLeft;
+          if (timeLeft == 0) {
+            clearInterval(timer);
+            endQuiz();
+          }
+        }, 1000);
+      }
+
+      // Function to check the user's answer
+      function checkAnswer() {
+        userAnswer = document.getElementById("answer").value;
+        if (userAnswer == answer) {
+          correctCount++;
+        }
+        // Generate the next question
+        generateQuestion();
+        document.getElementById("answer").value = "";
+      }
+
+      // Function to end the quiz
+      function endQuiz() {
+        clearInterval(timer);
+        // Display the results
+        document.getElementById("quiz").innerHTML =
+          "<h1>Quiz Results</h1>" +
+          "<p>You got " +
+          correctCount +
+          " out of " +
+          questionCount +
+          " questions correct!</p>" +
+          "<button onclick='location.reload()'>Take Quiz Again</button>";
+      }
+    </script>
+  </head> 
+  <body> 
+    <div id="quiz">
+      <h1><strong class="title">Time Test</strong></h1>
+      <h4><strong class ="Intro">Instructions</strong></h4> 
+      <p><strong class ="Intro">Answer as many questions as you can in 60 seconds!</strong></p>
+      <p><strong class ="Intro">Make sure you have a pencil and paper for some problems</strong></p> 
+    <p><strong class ="Intro">First person to get 15/15 gets a prize from Mr. Freeman</strong></p> 
+      
+      <p id="question"></p>
+      <input type="number" id="answer" />
+      <button onclick="checkAnswer()">Submit Answer</button>
+      <p id="timer"></p>
+      <button onclick="startQuiz()">Start Quiz</button>
+      <button onclick='location.reload()'>Restart</button>
+    </div>
+  </body>
+</html>

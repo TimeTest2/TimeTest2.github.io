@@ -96,6 +96,7 @@
       function endQuiz() {
         clearInterval(timer);
         // Display the results
+        <center> 
         document.getElementById("quiz").innerHTML =
           "<h1>Quiz Results</h1>" +
           "<p>You got " +
@@ -104,6 +105,7 @@
           questionCount +
           " questions correct!</p>" +
           "<button onclick='location.reload()'>Take Quiz Again</button>";
+        </center> 
       }
     </script>
   </head> 
